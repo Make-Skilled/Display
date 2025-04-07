@@ -15,7 +15,7 @@ void scan_module() {
 }
 
 void setup() {
-  Serial.begin(115200);  // Must match ESP32 baud rate
+  Serial.begin(115200);  // Match ESP32 baud rate
   Timer1.initialize(2000);
   Timer1.attachInterrupt(scan_module);
   led_module.clearScreen(true);
@@ -28,12 +28,11 @@ void loop() {
     if (msg.length() > 0) {
       led_module.clearScreen(true);
       led_module.selectFont(FONT);
-      led_module.drawMarquee(msg.c_str(), msg.length(), (32 * ROW), 0);
-      long start = millis();
-      long timing = start;
+      led_module.drawMarquee(msg.c_str(), msg.length(), (32 * COLUMN), 0);
+      long timing = millis();
       boolean flag = false;
       while (!flag) {
-        if ((timing + 20) < millis()) {
+        if ((millis() - timing) >= 20) {
           flag = led_module.stepMarquee(-1, 0);
           timing = millis();
         }
