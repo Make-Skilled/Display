@@ -28,11 +28,12 @@ void loop() {
     if (msg.length() > 0) {
       led_module.clearScreen(true);
       led_module.selectFont(FONT);
-      led_module.drawMarquee(msg.c_str(), msg.length(), (32 * COLUMN), 0);
-      long timing = millis();
+      led_module.drawMarquee(msg.c_str(), msg.length(), (32 * ROW), 0);
+      long start = millis();
+      long timing = start;
       boolean flag = false;
       while (!flag) {
-        if ((millis() - timing) >= 20) {
+        if ((timing + 50) < millis()) {
           flag = led_module.stepMarquee(-1, 0);
           timing = millis();
         }
